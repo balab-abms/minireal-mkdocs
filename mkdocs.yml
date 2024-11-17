@@ -1,0 +1,85 @@
+site_name: WSim4ABM
+
+nav:
+  - Welcome: index.md
+  - Getting Started: getting_started.md
+  - Deployment: 
+    - Deployment on Single Server: deployment/single_server_deployment.md
+    - Distributed Deployment: deployment/distributed_deployment.md
+  - Annotation Processing:
+    - Background: annotation_processing/antn_process_background.md
+    - Model & Agent Annotations: annotation_processing/model_agent_annotation.md
+    - Simulation parameter Annotation: annotation_processing/param_annotation.md
+    - Charting Annotation: annotation_processing/chart_annotation.md
+  - Project Generation:
+    - Generate from Template: project_generation/generate_from_template.md
+    - Generate from Samples: project_generation/generate_from_samples.md
+  - Running Simulations: running_sim.md
+  - Sample Models:
+    - Economy Model: sample_models/economy_sample_model.md
+    # - Life Model: sample_models/life_sample_model.md
+  - User Account Management: account_management.md
+  - System Administration:
+    - Managing User Accounts: system_admin/managing_users.md
+    - Managing Sample Models: system_admin/managing_samples.md
+  - Supplimantory Softwares:
+    - Portainer: supplimantory_software/portainer.md
+    - Kafka Control Center: supplimantory_software/kafka_control_center.md
+    - pgAdmin: supplimantory_software/pgadmin.md
+    # - DBeaver: supplimantory_software/dbeaver.md
+  - Others:
+    - Release Note: others/release_note.md
+    - Contributing: others/contributing.md
+    - License: others/license.md
+    - Recognition: others/recognition.md
+
+markdown_extensions:  
+    - toc:                 
+        permalink: true
+
+# Add repository metadate for more integration and ease-of-use
+# repo_name: Github
+# repo_url: https://github.com/martinlingstuyl/blimped-mkdocs/
+# edit_uri: 'docs/'    
+
+# Configuring a theme
+theme: 
+    name: material 
+    color_mode: auto
+    user_color_mode_toggle: true
+    locale: en
+    highlightjs: true
+    hljs_languages:
+      - yaml
+      - java
+      - bash
+    features:
+      - content.code.copy
+      - content.code.select
+
+
+plugins:
+  - search
+  - glightbox
+  # - git-revision-date
+  # - pdf-export:
+  #     combined: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
+
+extra_css:
+    - static/css/extra.css
+
+dev_addr: '0.0.0.0:8085'
