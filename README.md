@@ -18,5 +18,6 @@ ways.
 
 After running the documentation in either of the above methods, the UI can
 be accessed by navigating to port `8085` of the server.
-    * localhost:8085
-    * <host_ip_address>:8085
+
+* localhost:8085
+* <host_ip_address>:8085
