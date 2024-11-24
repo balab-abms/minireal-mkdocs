@@ -6,22 +6,22 @@ authors:
 date: 2024-11-10
 ---
 
-# Background on Anntation Processing
+# Background on Annotation Processing
 ## Introduction
 Annotation processing plays a key role in the utilization of the MiniReal system.
 It helps to generate the `Simulation Launcher` class when the project is compiled 
 based on the respective simulation code implementation of the User. This class is:
 
-* Used an an entry point for running the simulaiton jar file. The MiniReal system
+* Used an entry point for running the simulation jar file. The MiniReal system
 looks for this class when trying to run the simulation jar file.
-* Accepts the values for simulation parameters at run time from the MiniReal system
+* Accepts the values for simulation parameters at run-time from the MiniReal system
 UI.
 * Sends the charting values to the Message broker by invoking the correct method.
 
 ## Details of MiniReal Annotations
-The custome Annotations and the respective processor built for the MiniReal system
+The custom Annotations and the respective processor built for the MiniReal system
 is published on Maven Central. ([MiniReal Annotation Processing Library](
-    https://central.sonatype.com/artifact/io.github.panderior/minireal-annotation))
+    https://central.sonatype.com/artifact/io.github.panderior/minireal-annotation)).
 
 The following table shows the purpose and scope of the annotations.
 

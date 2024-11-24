@@ -5,6 +5,7 @@ nav:
   - Getting Started: getting_started.md
   - Deployment: 
     - Deployment on Single Server: deployment/single_server_deployment.md
+    - Supplimented deployment on Single Server: deployment/supplimented_single_server_deployment.md
     - Distributed Deployment: deployment/distributed_deployment.md
   - Annotation Processing:
     - Background: annotation_processing/antn_process_background.md

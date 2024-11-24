@@ -16,7 +16,7 @@ users.
 * [pgAdmin official page](https://www.pgadmin.org/)
 * [pgAdmin Docker container](https://hub.docker.com/r/dpage/pgadmin4)
 
-Since the database for WSim system is based on PostgreSQL, pgAdmin can be used to
+Since the database for the MiniReal system is based on PostgreSQL, pgAdmin can be used to
 manage that database.
 ---
 ## Deployment
@@ -25,26 +25,24 @@ for a smooth integration. The following docker-compose file shows an integrated 
 of the pgAdmin container with the respective database.
 
 ``` yaml title="docker-compose.yml"
-version: '3.8'
+version: '3.3'
 
 services:
   postgres:
     container_name: postgres
     image: postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: example_pwd_changeme
-      POSTGRES_MULTIPLE_DATABASES: auth, sim, minireal
-      PGDATA: /data/postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_MULTIPLE_DATABASES: ${POSTGRES_MULTIPLE_DATABASES}
     volumes:
-      - postgres:/data/postgres
+      - ./postgre_data:/var/lib/postgresql/data
       - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
-
     ports:
       - "5432:5432"
     networks:
       - postgres
-    restart: unless-stopped
 
   pgadmin:
     container_name: pgadmin
@@ -66,13 +64,17 @@ networks:
     driver: bridge
 
 volumes:
-  postgres:
   pgadmin:
-
 ```
 
-Additionally the PostgreSQL service also requires a startup bash script be placed with the Docker
-compose file inorder to initialized the required databases for the SimReal system. The script is
+```bash title=".env"
+POSTGRES_USER=root
+POSTGRES_PASSWORD=example_pwd
+POSTGRES_MULTIPLE_DATABASES=auth,sim,minireal
+```
+
+Additionally, the PostgreSQL service also requires a startup bash script be placed with the Docker
+compose file inorder to initialize the required databases for the MiniReal system. The script is
 named `init-db.sh` as shown below.
 
 ```bash title="init-db.sh"
@@ -105,7 +107,7 @@ to integrate the PostgreSQL database with it.
 The following steps can be taken to navigate to the UI that will help to register the
 PostgreSQL database container.
 
-1. Right click on the `Servers` option found on the left pannel of the screen.
+1. Right-click on the `Servers` option found on the left panel of the screen.
 2. Hover over the `Register` option found in the context window that pops up.
 3. Then click on `Server...` option from the new options that show up.
 
@@ -127,11 +129,10 @@ On the `Connection` tab, the following information should be set:
 
 * Set `Host name/address` as `postgres`.
     - This is the service name in the docker-compose file. The usage of such service name for
-    address is possible since both the pgAdmin and PostgreSQL containers are on the same docker-
-    network.
+    address is possible since both the pgAdmin and PostgreSQL containers are on the same docker-network.
 * Set `Port` to `5432`.
 * Set `Maintenance database` as `minireal`.
-    - This is the database that WSim will use to store all the systm data. The creation of this database
+    - This is the database that WSim will use to store all the system data. The creation of this database
     is handled by the `init-db.sh` script.
 * Set `Username` as `root`.
 * Enter the password set for the PostgreSQL database to the `Password` field.
@@ -140,7 +141,7 @@ On the `Connection` tab, the following information should be set:
 
 !!! note
     The above information is set base on the `docker-compose` file shared in the previous section.
-    Any changes made to the docker configuration file should be refelected in the form specified above
+    Any changes made to the docker configuration file should be reflected in the form specified above
     as well.
 
 ![Filling out the connection details of the Postgre database](../imgs/pgadmin/pgadmin_register_server_2.png)

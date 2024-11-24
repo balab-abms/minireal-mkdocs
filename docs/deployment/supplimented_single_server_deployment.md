@@ -1,13 +1,13 @@
 ---
-title: Deployment on Single Server
-summary: Deatils for the Deployment of the MiniReal system on a Single Server.
+title: Deployment on Single Server with Supplimantory Softwares
+summary: Deatils for the Deployment of the MiniReal system on a Single Server with Supplimantory Softwares.
 authors:
     - Duguma Yeshitla
-date: 2024-11-06
+date: 2024-11-18
 ---
-# Deployment on Single Server
+# Deployment on Single Server with Supplementary Software
 This section elaborates on how deploy the MiniReal system onto a single server or High
-Performance Computer (HPC). 
+Performance Computer (HPC) with all the components and supplementary software. 
 ---
 
 ## Requirements
@@ -33,6 +33,15 @@ The order in which the components should be started is:
 2. Kafka broker container
 3. Once all the above services are confirmed to run then the MiniReal container can be started.
 
+## Supplementary Software
+Additional software and tools exist that make the monitoring of the MiniReal system, and it's component
+much easier. These software are:
+
+* [Apache Kafka Control Center](../supplimantory_software/kafka_control_center.md): to monitor and manage the
+kafka broker.
+* [pgAdmin](../supplimantory_software/pgadmin.md): to monitor and manage the PostGre database.
+
+This page includes these supplementing systems in the deployment docker-compose file.
 
 ## Docker YAML file
 Since this section targets deployment of all services onto a single server, then all
@@ -105,6 +114,24 @@ services:
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
     networks:
       - minireal_network
+  
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:7.3.1
+    hostname: control-center
+    container_name: control-center
+    depends_on:
+      - broker
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+      PORT: 9021
+    networks:
+      - minireal_network
 
   postgres:
     container_name: postgres
@@ -122,20 +149,38 @@ services:
     networks:
       - minireal_network
 
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - minireal_network
+    
+
 networks:
   minireal_network:
     driver: bridge
 
+volumes:
+  pgadmin:
 ```
 
 Inorder to ensure communication among these services, setting the required environment
 variables is essential. The next section explains how to set them up.
 
-## Required Enviroment Variables
+## Required Environment Variables
 The MiniReal system accepts the addresses of the PostGREs database and Kafka broker at runtime 
 (deployment). The database and broker services also require configuration on how 
 they accept requests, and they are identified. For this reason the following environment variables
-need to be defined in a file named `.env` in the same directory as the Docker YAML file.
+need to be defined in a file in the same directory as the Docker YAML file.
 
 ```bash title=".env"
 # set postgre variables
@@ -176,7 +221,6 @@ done
     Since all the containers are on the same docker network, the names of the services
     in the Docker YAML configuration can be used to identify their location.
 
-
 ## Deployment
 After placing the Docker YAML and environment variable files in the same directory, run the
 following command to deploy all the services.
@@ -207,3 +251,9 @@ credentials for this user are:
     After logging in for the first time, make sure to change the password of this user.
     It's advised to create another user with the role of `ADMIN` for the executing the 
     operations of system management.
+
+The Kafka control center and pgAdmin supplementing software can be accessed as well.
+Please refer to their respective documentation on how to access their respective UI.
+
+* [Kafka control center](../supplimantory_software/kafka_control_center.md)
+* [pgAdmin](../supplimantory_software/pgadmin.md)

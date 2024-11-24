@@ -8,7 +8,7 @@ date: 2024-11-14
 
 # Getting Started
 This page shares a short path to deploy the MiniReal system on a server, and
-get with running simulations. The simples steps to using the MiniReal 
+get with running simulations. The simple steps to using the MiniReal 
 system include:
 
 1. Deploy the system with its components onto a server.

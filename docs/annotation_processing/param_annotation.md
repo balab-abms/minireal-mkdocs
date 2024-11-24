@@ -6,9 +6,9 @@ authors:
 date: 2024-11-10
 ---
 
-# Simluation parameter Annotation usage
+# Simulation parameter Annotation usage
 The `@SimParam` annotation can be used to specify the simulation model parameters
-that will be recieved at runtime. The MiniReal system will pickup the list of
+that will be received at runtime. The MiniReal system will pick up the list of
 simulation parameters and show them on the UI. The values inserted by the User on
 the UI will be fed to the simulation on runtime.
 
@@ -16,7 +16,7 @@ This annotation should be defined for arguments placed in the constructor of the
 `Model` class.
 
 The `@SimParam` annotation takes one argument for its self, which is the default value
-for the parameter it is binded to. If no value is provided to the simulation model at
+for the parameter it is bound to. If no value is provided to the simulation model at
 runtime, this default value is used to initialize the model parameter.
 
 * The key for this argument is named `value` and it takes a `String` object.

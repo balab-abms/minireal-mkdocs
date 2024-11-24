@@ -8,10 +8,10 @@ date: 2024-11-10
 
 # Model and Agent Annotation usage
 The `@SimModel` and `@SimAgent` annotations are used to mark the simulation `Model`
-and `Agent` classes. This information is used by the MiniReal Annotation Processor
+and `Agent` classes respectively. This information is used by the MiniReal Annotation Processor
 library in the generation of the `Simulation Launcher` class.
 
-These annotations should be placed ontop of the `Model` and `Agent` classes respectively.
+These annotations should be placed on top of the `Model` and `Agent` classes.
 The details of their specification is explained in the [Background](./antn_process_background.md)
 page.
 

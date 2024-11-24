@@ -8,12 +8,12 @@ date: 2024-11-10
 
 # Simulation Chart Annotation usage
 The MiniReal system gives realtime visualization (insight) of simulation models through
-a line chart on the browser. This line chart module recieves an integer value from the
+a line chart on the browser. This line chart module receives an integer value from the
 simulation on each tick and displays it accordingly. 
 
-* The simulation model must have one or more methods that calculate some aggrigate behaviour
+* The simulation model must have one or more methods that calculate some aggregate behaviour
 and return an integer value for each tick.
-* Then users have to annotate such methods with the `@SimChart` annotation. This annoatation takes
+* Then users have to annotate such methods with the `@SimChart` annotation. This annotation takes
 argument with the keyword called `name` for the chart name. The value for this argument should be
 passed as `String`.
 
@@ -30,10 +30,10 @@ public class Model extends SimState  {
 	public int chartingMethod(){
         int result = 0;
 
-        // perform oprtation to calculate and obtain integer representing ~
+        // perform operation to calculate and obtain integer representing ~
         // ~ aggregate simulation behaviour (update result)
 
-        return result
+        return result;
     }
 }
 ```
@@ -63,8 +63,8 @@ public class Model extends SimState  {
 
     // rest of code
 
-    // define a charting method that calculates the total weath of the top 10% ~
-    // ~ wealthy populaiton.
+    // define a charting method that calculates the total wealth of the top 10% ~
+    // ~ wealthy population.
 	@SimChart(name="top10")
 	public int top10wealth(){
 		// sort the bag of the population
@@ -87,22 +87,22 @@ public class Model extends SimState  {
 }
 ```
 
-In the above code snippt, the `top10wealth` method returns the wealth value of the top 10%
-wealthiest agents in the [Economy Model](../sample_models/economy_sample_model.md) simulation 
-(for more information see referenced model documentation). This value is recieved and charted 
+In the above code snippet, the `top10wealth` method returns the wealth value of the top 10%
+the wealthiest agents in the [Economy Model](../sample_models/economy_sample_model.md) simulation 
+(for more information see referenced model documentation). This value is received and charted 
 on the MiniReal UI as shown below. The slider on the left can be used to narrow or widen the 
 y-axis value range, hence zooming in or out of the chart.
 
-![Economy Model single chart visualization](../imgs/economy_model_one_chart.png){ align=center }
+![Economy Model single chart visualization](../imgs/sample_models/economy_model/economy_model_one_chart.png){ align=center }
 <p style="text-align: center; font-size: 0.75em;">
     Figure: Economy Model single chart visualization on MiniReal system.
 </p>
 
 ## Multiple Charts for a Simulation
-It is possible to define multiple chartes for a single simulation inorder to get various insights.
-This can be done by implementing mutiple methods and annotating them with the `@SimChart` annotation.
+It is possible to define multiple charts for a single simulation inorder to get various insights.
+This can be done by implementing multiple methods and annotating them with the `@SimChart` annotation.
 The name of the chart passed to the annotation, however, should be unique to each chart. The charts will
-plotted on the same grid differentiated by color.
+be plt on the same grid differentiated by color.
 
 ```java title="Model.java"
 import org.simreal.annotation.*;
@@ -128,8 +128,8 @@ public class Model extends SimState  {
 
     // rest of code
 
-    // define a charting method that calculates the total weath of the top 10% ~
-    // ~ wealthy populaiton.
+    // define a charting method that calculates the total wealth of the top 10% ~
+    // ~ wealthy population.
 	@SimChart(name="top10")
 	public int top10wealth(){
 		// sort the bag of the population
@@ -150,8 +150,8 @@ public class Model extends SimState  {
 		return top10_wealth_sum;
 	}   
 
-    // define a charting method that calculates the total weath of the bottom ~
-    // ~ 50% of the populaiton interms of wealth.
+    // define a charting method that calculates the total wealth of the bottom ~
+    // ~ 50% of the population in-terms of wealth.
     @SimChart(name="bottom50")
 	public int bottom50wealth()	{
 		// sort the bag of the population
@@ -177,9 +177,9 @@ public class Model extends SimState  {
 The result of running the above model is shown below. Users can enable or disable
 the display of each chart by clicking on the chart name.
 
-![Economy Model multiple charts](../imgs/economy_model_multiple_charts.png){ align=center }
+![Economy Model multiple charts](../imgs/sample_models/economy_model/economy_model_multiple_charts.png){ align=center }
 <p style="text-align: center; font-size: 0.75em;">
-    Figure: Economy Model multple charts visualization on MiniReal system.
+    Figure: Economy Model multiple charts visualization on MiniReal system.
 </p>
 
 !!! note

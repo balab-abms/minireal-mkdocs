@@ -16,7 +16,7 @@ efficient deployment, monitoring, and securing of containers.
 * [Portainer official page](https://www.portainer.io/)
 * [Portainer Community Edition Docker image](https://hub.docker.com/r/portainer/portainer-ce)
 
-Since all of the services related to WSim are containerized, Portainer can be
+Since all the services related to MiniReal are containerized, Portainer can be
 used to manage their state by using the web UI it provides.
 ---
 ## Deployment
@@ -24,7 +24,7 @@ The deployment of Portainer can be done by running the following docker-compose
 file.
 
 ``` yaml title="docker-compose.yml"
-version: "3.8"
+version: "3.3"
 services:
   portainer:
     image: portainer/portainer-ce:latest
@@ -57,5 +57,5 @@ https://[host_ip_address]:9443
 </p>
 
 !!! note
-    Note that Portainer needs `https` access even if its called from localhost
+    Note that Portainer needs `https` access even if it's called from localhost
     or ip address.

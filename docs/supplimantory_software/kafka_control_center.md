@@ -9,18 +9,18 @@ date: 2024-11-16
 # Kafka Control Center
 Kafka Control Center is a web-based tool designed to manage and monitor Apache
 Kafka clusters or brokers. It provides an intuitive user interface for cluster management, 
-message inspection, and Schema Registry integration
+message inspection, and Schema Registry integration.
 
-In the case of WSim, the Control Center can be used to view the health of
+In the case of MiniReal, the Control Center can be used to view the health of
 the Kafka broker and monitor the data being passed through the topics.
 ---
 ## Deployment
 The following docker-compose file includes the `Zookeeper` and `Apache Kafka Broker` containers
-in addition to the `Apache Kafka Control Center`, since the initial two services are pre-requist
+in addition to the `Apache Kafka Control Center`, since the initial two services are prerequisite
 for the Control Center.
 
 ``` yaml title="docker-compose"
-version: '3.8'
+version: '3.3'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.1
@@ -41,8 +41,6 @@ services:
     ports:
       - "9092:9092"
       - "9101:9101"
-    env_file:
-          - .env_kafka
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -70,7 +68,6 @@ services:
     container_name: control-center
     depends_on:
       - broker
-
     ports:
       - "9021:9021"
     environment:
@@ -81,10 +78,10 @@ services:
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
 ```
-The following enviroment variables file needs to be placed in the same
-directroy as the docker-compose file.
+The following environment variables file needs to be placed in the same
+directory as the docker-compose file.
 
-```bash title=".env_kafka"
+```bash title=".env"
 KAFKA_ADDRESS=<IP_address_of_server>
 ```
 
@@ -101,15 +98,15 @@ The web UI for the Kafka Control Center can be access by going to the address:
 </p>
 
 ### Monitoring Kafka Topics
-The WSim system hugly relies on the `Topics` of the Kafka broker. Thus the control center is 
+The MiniReal system hugely relies on the `Topics` of the Kafka broker. Thus, the control center is 
 mainly used to observe and monitor the state of the `Topics`. The list of `Topics` currently
 being managed by the broker can be reached by the following steps.
 
 * Click on the cluster found in the Home page.
-* Click on `Topics` option on the left handside drawer, and this will display all the topics.
+* Click on `Topics` option on the left hand-side drawer, and this will display all the topics.
 
 !!! note
-    Topics are continously created and deleted based on simulation sesions, thus they are temporary.
+    Topics are continuously created and deleted based on simulation sessions, thus they are temporary.
     Should the list of Topics increase too much, system admins can delete them from the Control Center.
 
 ![List of Topics on Kafka broker](../imgs/kafka/kafka_topics.png){ align=center }
@@ -118,7 +115,7 @@ being managed by the broker can be reached by the following steps.
 </p>
 
 ### Monitoring Simulation Data
-The simulation charting data passes through the Kafka broker inorder to reach the WSim UI. This data 
+The simulation charting data passes through the Kafka broker inorder to reach the MiniReal UI. This data 
 can be monitored by clicking on the correct `Topic` name on the Control Center and navigating to the
 `Messages` tab. 
 

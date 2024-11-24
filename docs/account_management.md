@@ -9,14 +9,14 @@ date: 2024-11-14
 # User Account Management
 User can navigate to their account setting by clicking on the avatar located in
 top right side of the screen. The clicking on the `Profile` option will display
-the `User Profile` page. Here users can update thier:
+the `User Profile` page. Here users can update their:
 
 * username,
 * name,
 * password and,
 * profile picture.
 
-Also Users can delete thier user account from this page (todo).
+Also, Users can delete their user account from this page.
 
 ![User Profile Page](./imgs/user_account_management.png){ align=center }
 <p style="text-align: center; font-size: 0.75em;">

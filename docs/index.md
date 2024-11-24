@@ -14,6 +14,10 @@ called `WSim4ABM` or `MiniReal`. This opensource project houses remote access to
 Performance Computing (HPC) resources through browser based visualization for 
 ABM simulations along with other services.
 
+<div align="center">
+    <a href="">Source Code</a>  |   <a href="">Paper</a>
+</div>
+
 !!! note
     Regarding the naming of the system, it is given two names:
 
