@@ -15,7 +15,7 @@ Performance Computing (HPC) resources through browser based visualization for
 ABM simulations along with other services.
 
 <div align="center">
-    <a href="">Source Code</a>  |   <a href="">Paper</a>
+    <a href="https://github.com/balab-abms/minireal">Source Code</a>  |   <a href="">Paper</a>
 </div>
 
 !!! note
@@ -75,5 +75,14 @@ the `System Administration` section.
 * There are supplimantory softwares that make the monitoring of parts of the MiniReal system easier. The
 `Supplimantory Softwares` section shares information on this.
 * Other informations about the system and this documentation are placed in the `Others` section.
+
+## Relevant Repositories
+To realize the MiniReal system various modules and code have been implemented. Here is a list of 
+the relevant repositories:
+
+* [System source code](https://github.com/balab-abms/minireal)
+* [Annotation processor source code](https://github.com/balab-abms/minireal-annotation-processing)
+* [Sample models source codes](https://github.com/balab-abms/minireal-sample-models)
+* [Documentation site source code](https://github.com/balab-abms/minireal-mkdocs)
 
 <p align="center"><strong>Happy Modeling!</strong></p>

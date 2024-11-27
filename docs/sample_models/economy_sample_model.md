@@ -14,6 +14,9 @@ the simulation, an agent gives one unit of money to a randomly selected agent.
 The experiment explores how wealth distribution evolves over time, providing an 
 abstract framework to study the factors that influence wealth distribution in society.
 
+The source code for the Simple Economy model can be obtained from a deployed MiniReal system
+or from the [Sample Models repository](https://github.com/balab-abms/minireal-sample-models).
+
 ## Model
 When designing a use case in Agent-Based Modeling (ABM), several key aspects must be 
 considered: `model parameters`, `agent space`, and `output observation`. In the Simple Economy model, 
