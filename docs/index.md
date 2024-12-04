@@ -49,10 +49,10 @@ in interactions between the simulation engine and the User Interface.
 WSim4ABM provides an end-to-end solution for developing, running, and visualizing ABM simulations, 
 enhancing accessibility and scalability for researchers and developers.
 
-![Overall system architecture](./imgs/overall_system_arch.png){ align=center }
+<!-- ![Overall system architecture](./imgs/overall_system_arch.png){ align=center }
 <p style="text-align: center; font-size: 0.75em;">
     Figure: Overall system architecture
-</p>
+</p> -->
 
 ## Documentation Structure
 This documentation houses all the information needed to deploy and uitilize the MiniReal system.
