@@ -28,6 +28,8 @@ nav:
     - Kafka Control Center: supplimantory_software/kafka_control_center.md
     - pgAdmin: supplimantory_software/pgadmin.md
     # - DBeaver: supplimantory_software/dbeaver.md
+  - Troubleshooting:
+    - Installing Java JDK: troubleshooting/install_jdk.md
   - Others:
     - Release Note: others/release_note.md
     - Contributing: others/contributing.md
