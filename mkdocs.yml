@@ -30,6 +30,7 @@ nav:
     # - DBeaver: supplimantory_software/dbeaver.md
   - Troubleshooting:
     - Installing Java JDK: troubleshooting/install_jdk.md
+    - Setting Intellij Project SDK: troubleshooting/set_intellij_sdk.md
   - Others:
     - Release Note: others/release_note.md
     - Contributing: others/contributing.md

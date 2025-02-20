@@ -18,8 +18,13 @@ The running of a simulation model is made possible by uploading a compiled
 
 ### Option 1: Using Gradle plugin on Intellij IDE
 The first and easy way is through the UI in the IDE. For instance in `Intellij Idea`
-there exists a tab for `Gradle` projects on the left-hand-side. After opening that tab
+there exists a tab for `Gradle` projects on the right-hand-side. After opening that tab
 users can navigate to the `build` section of the project Gradle actions. 
+
+!!! note
+    For this approach to work, the Project SDK (Software Development Kit)  has to be 
+    properly set in Intellij to point to JDK 17. The [Setting Project SDK in Intellij](./troubleshooting/set_intellij_sdk.md) 
+    page provides the steps needed to ensure the correct Java version is set in the IDE.
 
 * After expanding the `build` section, users can first run the `clean` option
 by double-clicking on it. This will remove any existing compilation made for the project.

@@ -2,53 +2,58 @@
 title: Deployment on Single Server with Supplimantory Softwares
 summary: Deatils for the Deployment of the MiniReal system on a Single Server with Supplimantory Softwares.
 authors:
-    - Duguma Yeshitla
+  - Duguma Yeshitla
 date: 2024-11-18
 ---
+
 # Deployment on Single Server with Supplementary Software
+
 This section elaborates on how deploy the MiniReal system onto a single server or High
-Performance Computer (HPC) with all the components and supplementary software. 
+Performance Computer (HPC) with all the components and supplementary software.
+
 ---
 
 ## Requirements
-Before getting on deploying the system, two main components are needed to be 
+
+Before getting on deploying the system, two main components are needed to be
 installed on the server.
 
-*   Docker
-*   Java JDK (>= 17)
-
+- Docker
+- Java JDK = 17
 
 ## Components
+
 The components of the system required for the full functionality of MiniReal are:
 
-* [The MiniReal Webservice system docker image](https://hub.docker.com/r/pazed/MiniReal)
-* [A PostGREs database docker image](https://hub.docker.com/_/postgres)
-* [An Apache Kafka broker docker image](https://hub.docker.com/r/confluentinc/cp-server)
-* [Zookeeper service docker image to initialize Kafka broker](https://hub.docker.com/r/confluentinc/cp-zookeeper)
-
+- [The MiniReal Webservice system docker image](https://hub.docker.com/r/pazed/MiniReal)
+- [A PostGREs database docker image](https://hub.docker.com/_/postgres)
+- [An Apache Kafka broker docker image](https://hub.docker.com/r/confluentinc/cp-server)
+- [Zookeeper service docker image to initialize Kafka broker](https://hub.docker.com/r/confluentinc/cp-zookeeper)
 
 The order in which the components should be started is:
 
-1. PostGREs and Zookeeper container 
+1. PostGREs and Zookeeper container
 2. Kafka broker container
 3. Once all the above services are confirmed to run then the MiniReal container can be started.
 
 ## Supplementary Software
+
 Additional software and tools exist that make the monitoring of the MiniReal system, and it's component
 much easier. These software are:
 
-* [Apache Kafka Control Center](../supplimantory_software/kafka_control_center.md): to monitor and manage the
-kafka broker.
-* [pgAdmin](../supplimantory_software/pgadmin.md): to monitor and manage the PostGre database.
+- [Apache Kafka Control Center](../supplimantory_software/kafka_control_center.md): to monitor and manage the
+  kafka broker.
+- [pgAdmin](../supplimantory_software/pgadmin.md): to monitor and manage the PostGre database.
 
 This page includes these supplementing systems in the deployment docker-compose file.
 
 ## Docker YAML file
+
 Since this section targets deployment of all services onto a single server, then all
 services can be put to one Docker YAML configuration file as shown below.
 
 ```yaml title="docker-compose.yml"
-version: '3.3'
+version: "3.3"
 services:
   minireal:
     container_name: minireal
@@ -95,7 +100,7 @@ services:
       - "9101:9101"
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://${KAFKA_ADDRESS}:9092
       KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
@@ -110,11 +115,11 @@ services:
       KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
-      CONFLUENT_METRICS_ENABLE: 'true'
-      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      CONFLUENT_METRICS_ENABLE: "true"
+      CONFLUENT_SUPPORT_CUSTOMER_ID: "anonymous"
     networks:
       - minireal_network
-  
+
   control-center:
     image: confluentinc/cp-enterprise-control-center:7.3.1
     hostname: control-center
@@ -124,7 +129,7 @@ services:
     ports:
       - "9021:9021"
     environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: "broker:29092"
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
@@ -156,14 +161,13 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_SERVER_MODE: "False"
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
     networks:
       - minireal_network
-    
 
 networks:
   minireal_network:
@@ -177,8 +181,9 @@ Inorder to ensure communication among these services, setting the required envir
 variables is essential. The next section explains how to set them up.
 
 ## Required Environment Variables
-The MiniReal system accepts the addresses of the PostGREs database and Kafka broker at runtime 
-(deployment). The database and broker services also require configuration on how 
+
+The MiniReal system accepts the addresses of the PostGREs database and Kafka broker at runtime
+(deployment). The database and broker services also require configuration on how
 they accept requests, and they are identified. For this reason the following environment variables
 need to be defined in a file in the same directory as the Docker YAML file.
 
@@ -197,9 +202,10 @@ POSTGRES_DB=minireal
 POSTGRES_ADDRESS=postgres
 POSTGRES_PORT=5432
 ```
+
 !!! note
-    The only value that needs to be updated in the above `.env` file is the `POSTGRES_PASSWORD`
-    variable.
+The only value that needs to be updated in the above `.env` file is the `POSTGRES_PASSWORD`
+variable.
 
 Additionally, the PostGREs service also requires a startup bash script be placed with the Docker
 compose file inorder to initialize the required databases for the MiniReal system. The script is
@@ -218,10 +224,11 @@ done
 ```
 
 !!! note
-    Since all the containers are on the same docker network, the names of the services
-    in the Docker YAML configuration can be used to identify their location.
+Since all the containers are on the same docker network, the names of the services
+in the Docker YAML configuration can be used to identify their location.
 
 ## Deployment
+
 After placing the Docker YAML and environment variable files in the same directory, run the
 following command to deploy all the services.
 
@@ -236,6 +243,7 @@ docker compose up -d
 ```
 
 ## Finalizing deployment
+
 Upon successful deployment, navigate to `localhost:8090` or `<host_ip_address>:8090` to
 obtain the login screen to the MiniReal system.
 
@@ -244,16 +252,16 @@ obtain the login screen to the MiniReal system.
 Following the initial deployment one user with the `OWNER` privilege will be created. The
 credentials for this user are:
 
-* username: `owner`
-* password: `changemepwd`
+- username: `owner`
+- password: `changemepwd`
 
 !!! warning
-    After logging in for the first time, make sure to change the password of this user.
-    It's advised to create another user with the role of `ADMIN` for the executing the 
-    operations of system management.
+After logging in for the first time, make sure to change the password of this user.
+It's advised to create another user with the role of `ADMIN` for the executing the
+operations of system management.
 
 The Kafka control center and pgAdmin supplementing software can be accessed as well.
 Please refer to their respective documentation on how to access their respective UI.
 
-* [Kafka control center](../supplimantory_software/kafka_control_center.md)
-* [pgAdmin](../supplimantory_software/pgadmin.md)
+- [Kafka control center](../supplimantory_software/kafka_control_center.md)
+- [pgAdmin](../supplimantory_software/pgadmin.md)

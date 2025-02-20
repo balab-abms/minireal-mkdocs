@@ -2,45 +2,48 @@
 title: Distributed Deployment
 summary: Details for the Deployment of the MiniReal system in a distributed manner.
 authors:
-    - Duguma Yeshitla
+  - Duguma Yeshitla
 date: 2024-11-06
 ---
+
 # Distributed Deployment
+
 This section elaborates on how deploy the MiniReal system onto many servers in a distributed
 manner.
+
 ---
 
 ## Requirements
-Before getting on deploying the system two main components are needed to be 
+
+Before getting on deploying the system two main components are needed to be
 installed on the server.
 
-*   Docker
-*   Java JDK (>= 17)
-
+- Docker
+- Java JDK = 17
 
 ## Components
+
 The components of the system required for the full functionality of MiniReal are:
 
-* [The MiniReal Webservice system docker image](https://hub.docker.com/r/pazed/MiniReal)
-* [A PostGREs database docker image](https://hub.docker.com/_/postgres)
-* [An Apache Kafka broker docker image](https://hub.docker.com/r/confluentinc/cp-server)
-* [Zookeeper service docker image to initialize Kafka broker](https://hub.docker.com/r/confluentinc/cp-zookeeper)
-
+- [The MiniReal Webservice system docker image](https://hub.docker.com/r/pazed/MiniReal)
+- [A PostGREs database docker image](https://hub.docker.com/_/postgres)
+- [An Apache Kafka broker docker image](https://hub.docker.com/r/confluentinc/cp-server)
+- [Zookeeper service docker image to initialize Kafka broker](https://hub.docker.com/r/confluentinc/cp-zookeeper)
 
 The order in which the components should be started is:
 
-1. PostGREs and Zookeeper container 
+1. PostGREs and Zookeeper container
 2. Kafka broker container
 3. Once all the above services are confirmed to run then the MiniReal container can be started.
 
-
 ## Deploying Database service
+
 The PostGREs database container can be deployed separately on any server
 that is accessible to the MiniReal Service. The Docker YAML and environment variable files
 should be placed in the same directory and their contents are shared below.
 
 ```yaml title="docker-compose.yml"
-version: '3.3'
+version: "3.3"
 
 services:
   postgres:
@@ -57,6 +60,7 @@ services:
     ports:
       - "5432:5432"
 ```
+
 The following `.env` file needs to be placed in the same directory as the `docker-compose` file
 in order to inject the required environment variables to the container.
 
@@ -67,8 +71,8 @@ POSTGRES_MULTIPLE_DATABASES=auth,sim,minireal
 ```
 
 !!! note
-    The only value that needs to be updated in the above `.env` file is the `POSTGRES_PASSWORD`
-    variable.
+The only value that needs to be updated in the above `.env` file is the `POSTGRES_PASSWORD`
+variable.
 
 Additionally, the PostGREs service also requires a startup bash script be placed with the Docker
 compose file inorder to initialize the required databases for the MiniReal system. The script is
@@ -85,17 +89,19 @@ for db in ${POSTGRES_MULTIPLE_DATABASES//,/ }; do
 EOSQL
 done
 ```
+
 The viewing and managing of this database is essential for smooth troubleshooting. The [pgAdmin](../supplimantory_software/pgadmin.md)
 is a supplementing software used to achieve this and its documentation page has all the essential
 information on how to deploy it with the PostgreSQL database.
 
 ## Deploying Message Broker service
+
 The Apache Kafka Message broker also can be deployed on a separate server that can be accessed
 by the MiniReal system. The Zookeeper and Kafka broker services, however, should be deployed
 together on the same server. The Docker compose YAML and environment variable files are shared below.
 
 ```yaml title="docker-compose.yml"
-version: '3.3'
+version: "3.3"
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.1
@@ -118,7 +124,7 @@ services:
       - "9101:9101"
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://${KAFKA_ADDRESS}:9092
       KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
@@ -133,8 +139,8 @@ services:
       KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
-      CONFLUENT_METRICS_ENABLE: 'true'
-      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      CONFLUENT_METRICS_ENABLE: "true"
+      CONFLUENT_SUPPORT_CUSTOMER_ID: "anonymous"
 ```
 
 The following `.env` file also needs to be configured for the Kafka container.
@@ -151,16 +157,17 @@ used to monitor kafka cluster and broker states. Its documentation page has all 
 information on how to deploy it with the broker and use it.
 
 ## Deploying MiniReal service
+
 Once the Database and Message Broker services are up and running on their respective
 server, the MiniReal System can be deployed on a computer that can access both of the
 aforementioned services. Here the `ip` or `domain-name` of the pre-requisite services
 should be used for a proper integration with them.
 
-The content of the Docker compose and environment variables files for the MiniReal System 
-is shared below. 
+The content of the Docker compose and environment variables files for the MiniReal System
+is shared below.
 
 ```yaml title="docker-compose.yml"
-version: '3.3'
+version: "3.3"
 services:
   minireal:
     container_name: minireal
@@ -194,6 +201,7 @@ KAFKA_PORT=9092
 ```
 
 ## Docker containers deployment
+
 After placing the Docker YAML and environment variable files in the same directory, run the
 following command to deploy the respective services.
 
@@ -208,6 +216,7 @@ docker compose up -d
 ```
 
 ## Finalizing deployment
+
 Upon successful deployment, navigate to `<minireal_ip_address>:8090` to
 obtain the login screen to the MiniReal system.
 
@@ -216,10 +225,10 @@ obtain the login screen to the MiniReal system.
 Following the initial deployment one user with the `OWNER` privilege will be created. The
 credentials for this user are:
 
-* username: `owner`
-* password: `changemepwd`
+- username: `owner`
+- password: `changemepwd`
 
 !!! warning
-    After logging in for the first time, make sure to change the password of this user.
-    It's advised to create another user with the role of `ADMIN` for the executing the 
-    operations of system management.
+After logging in for the first time, make sure to change the password of this user.
+It's advised to create another user with the role of `ADMIN` for the executing the
+operations of system management.
