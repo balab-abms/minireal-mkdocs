@@ -11,5 +11,7 @@ Here are list of developers and researchers who have contributed to the
 realization of WSim4ABM (MiniReal) system.
 
 * [Prof. Lee Jihwan]()
+* [Prof. Kim Youngjin]()
+* [Prof. Kim Minsoo]()
 * [Duguma Yeshitla](https://github.com/panderior)
 
