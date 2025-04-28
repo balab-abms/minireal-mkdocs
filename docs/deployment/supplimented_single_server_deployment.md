@@ -256,9 +256,9 @@ credentials for this user are:
 - password: `changemepwd`
 
 !!! warning
-After logging in for the first time, make sure to change the password of this user.
-It's advised to create another user with the role of `ADMIN` for the executing the
-operations of system management.
+    After logging in for the first time, make sure to change the password of this user.
+    It's advised to create another user with the role of `ADMIN` for the executing the
+    operations of system management.
 
 The Kafka control center and pgAdmin supplementing software can be accessed as well.
 Please refer to their respective documentation on how to access their respective UI.
